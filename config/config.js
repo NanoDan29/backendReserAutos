@@ -8,10 +8,10 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 // ============================
 let urlDB;
 
-if (process.env.NODE_ENV === 'dev') {
-    urlDB = "mongodb://localhost:27017/reservaAutos";
-} else {
-    urlDB = "mongodb+srv://autos:autos@cluster0.kgukc.mongodb.net/autos?retryWrites=true&w=majority"
-}
+// if (process.env.NODE_ENV === 'dev') {
+//     urlDB = "mongodb://localhost:27017/reservaAutos";
+// } else {
+    urlDB = "mongodb+srv://autos:123@cluster0.kgukc.mongodb.net/AUTOS?retryWrites=true&w=majority"
+// }
 
 process.env.URLDB = urlDB;
