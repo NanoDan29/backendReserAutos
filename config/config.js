@@ -11,7 +11,7 @@ let urlDB;
 if (process.env.NODE_ENV === 'dev') {
     urlDB = "mongodb://localhost:27017/reservaAutos";
 } else {
-    urlDB = "mongodb+srv://jhoel:123@cluster0.pudma.mongodb.net/<dbname>?retryWrites=true&w=majority;"
+    urlDB = "mongodb+srv://autos:123@cluster0.kgukc.mongodb.net/autos?retryWrites=true&w=majority"
 }
 
 process.env.URLDB = urlDB;
