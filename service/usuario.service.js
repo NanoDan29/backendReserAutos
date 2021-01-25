@@ -23,7 +23,7 @@ usuarioService.getUsuario=(function (req, res) {
                     err
                 });
             }
-            console.log(usuarios)
+
             Usuario.count((err, conteo) => {
 
                 res.json({
