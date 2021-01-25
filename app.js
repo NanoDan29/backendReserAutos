@@ -13,7 +13,7 @@ const alquiler=require('./routes/alquilar.auto.route')
 app.use(cors())
 
 // parse application/x-www-form-urlencoded para tomar fomularios html
-app.use({ useNewUrlParser: true })
+app.use(bodyparser.urlencoded({ extended: false }))
 
 // parse aplication/json
 app.use(bodyparser.json())
@@ -24,7 +24,7 @@ app.use("/alquiler",alquiler)
 
 
 
-mongoose.connect(process.env.URLDB, (err, res) => {
+mongoose.connect( "mongodb+srv://jhoel:123@cluster0.pudma.mongodb.net/%3Cdbname%3E?retryWrites=true&w=majority;", (err, res) => {
     if (err) throw err;
     console.log('Base de datos ONLINE');
 });
