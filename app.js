@@ -13,7 +13,7 @@ const alquiler=require('./routes/alquilar.auto.route')
 app.use(cors())
 
 // parse application/x-www-form-urlencoded para tomar fomularios html
-app.use(bodyparser.urlencoded({ extended: false }))
+app.use({ useNewUrlParser: true })
 
 // parse aplication/json
 app.use(bodyparser.json())
