@@ -7,7 +7,7 @@ const bodyparser = require('body-parser');
 const cors = require('cors')
 const usuario = require('./routes/usuario.route')
 const auto = require('./routes/auto.route')
-const alquiler=require('./routes/alquilar.auto.route')
+const alquiler = require('./routes/alquilar.auto.route')
 
 //Habilitamos cors
 app.use(cors())
@@ -20,11 +20,11 @@ app.use(bodyparser.json())
 
 app.use("/", usuario)
 app.use("/auto", auto)
-app.use("/alquiler",alquiler)
+app.use("/alquiler", alquiler)
 
 
 
-mongoose.connect( "mongodb+srv://jhoel:123@cluster0.pudma.mongodb.net/%3Cdbname%3E?retryWrites=true&w=majority;", (err, res) => {
+mongoose.connect(process.env.URLDB, { useNewUrlParser: true, useUnifiedTopology: true }, (err, res) => {
     if (err) throw err;
     console.log('Base de datos ONLINE');
 });
