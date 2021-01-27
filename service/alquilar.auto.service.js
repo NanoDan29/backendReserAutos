@@ -19,7 +19,7 @@ alquilerService.getAlquileres = (req, res) => {
 alquilerService.getAlquileresCorreo = (req, res) => {
     let body = req.params
     console.log(body)
-    AlquilarAuto.find({ correo: body.correo })
+    AlquilarAuto.find({ correo: body.correo, estado: false })
         .exec((err, alquiler) => {
             if (err) return res.status(400).json({
                 ok: false,
@@ -37,8 +37,6 @@ alquilerService.registrarAlquiler = (req, res) => {
     let body = req.body
     const fecha = new Date()
     fecha.setDate(fecha.getDate() + Number(body.totalDias))
-
-
 
     let alquiler = new AlquilarAuto({
         correo: body.correo,
@@ -74,38 +72,45 @@ alquilerService.alquilar = (req, res) => {
         correo: body.correo,
         id_auto: body.id_auto,
         totalDias: body.totalDias,
+        nombre:body.nombre,
         costoAuto: body.costoAuto,
         fechasArriendo: body.fechasArriendo,
         fechasEntraga: fecha,
     })
+    console.log("alquilar",alquiler)
 
     autos.findById(body.id_auto, (err, data) => {
         let cantidadRestar = Number(data.cantidad)
+        console.log(cantidadRestar)
         if (cantidadRestar !== 0) {
             cantidadRestar = cantidadRestar - 1
             let datoAlquiler = {
                 _id: data._id,
+                corre:data.correo,
                 nombre: data.nombre,
                 marca: data.marca,
                 cantidad: cantidadRestar,
                 caracteristicas: data.caracteristicas,
                 costoAlquiler: data.costoAlquiler
             }
+         
             autos.findByIdAndUpdate(body.id_auto, datoAlquiler, (err, autoBD) => {
-                if (err) return res.status(400).json({
+                if (err) return  res.status(400).json({
                     ok: false,
                     message: "Alquiler Repetido",
                     err
                 });
+                console.log("Auto BD",autoBD)
 
                 alquiler.save((err, alquilerDB) => {
+
                     if (err) return res.status(400).json({
                         ok: false,
                         message: "Alquiler Repetido",
                         err
                     });
 
-                 return   res.json({
+                    return res.json({
                         ok: true,
                         usuario: alquilerDB
                     });
@@ -113,10 +118,10 @@ alquilerService.alquilar = (req, res) => {
                 })
             })
             // autos.findByIdAndUpdate(body.id_auto)
-        }else{
-            return   res.status(404).json({
+        } else {
+            return res.status(404).json({
                 ok: false,
-            }); 
+            });
         }
     })
 }

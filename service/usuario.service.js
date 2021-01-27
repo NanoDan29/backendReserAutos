@@ -99,7 +99,12 @@ usuarioService.registro=(function (req, res) {
 usuarioService.editarUsuario=(function (req, res) {
 
     let id = req.params.id;
-    
+    let usuario=req.body
+
+    usuario.password=bcrypt.hashSync(usuario.password, 10)
+
+    console.log(usuario)
+
     Usuario.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
         .exec((err, usuarioDB) => {
 

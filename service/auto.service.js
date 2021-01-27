@@ -23,8 +23,9 @@ autoService.registrarAuto = (req, res) => {
         nombre: body.nombre,
         marca: body.marca,
         cantidad: body.cantidad,
+        cantidadDisponible: body.cantidad,
         caracteristicas: body.caracteristicas,
-        costoAlquiler:body.costoAlquiler
+        costoAlquiler: body.costoAlquiler
     })
 
     auto.save((err, autoDB) => {
@@ -46,6 +47,7 @@ autoService.registrarAuto = (req, res) => {
 autoService.editarAuto = (req, res) => {
     let id = req.params.id
     let body = req.body
+
     Auto.findByIdAndUpdate(id, body, { new: true, runValidators: true })
         .exec((err, autoDB) => {
 
@@ -65,6 +67,18 @@ autoService.editarAuto = (req, res) => {
             });
 
         })
+
+}
+
+autoService.eliminar = (req, res) => {
+    let body = req.params.id
+
+    Auto.findByIdAndDelete(body, (err, data) => {
+        if (err) return res.status(400).json({ ok: "no Ok" })
+        
+        res.status(200).json({ok: "Elimindao con exito"})
+
+    })
 
 }
 

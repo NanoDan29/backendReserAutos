@@ -9,6 +9,12 @@ let AlquilarAuto = new Schema({
     correo: {
         type: String,
         required: [true, 'El id del usuario es requerido']
+    },nombre: {
+        type: String,
+        required: [true, 'El id del usuario es requerido']
+    },estado: {
+        type: Boolean,
+        default: false
     },
     totalDias: {
         type: Number,

@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const router = Router()
-const { getAutos, registrarAuto, editarAuto } = require('../service/auto.service')
+const { getAutos, registrarAuto, editarAuto,eliminar } = require('../service/auto.service')
 
 router.route('/autoDato')
     .get(getAutos)
@@ -8,5 +8,6 @@ router.route('/autoDato')
 
 router.route('/autoDato/:id')
     .put(editarAuto)
+    .delete(eliminar)
 
 module.exports = router

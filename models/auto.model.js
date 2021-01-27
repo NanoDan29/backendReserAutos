@@ -15,7 +15,11 @@ let autoSchema = new Schema({
     cantidad: {
         type: Number,
         required: [true, 'La cantidad es necesaria']
-    }, costoAlquiler: {
+    }, cantidadDisponible: {
+        type: Number,
+        required: [true, 'La cantidad es necesaria']
+    }
+    , costoAlquiler: {
         type: Number,
         required: [true, 'La cantidad es necesaria']
     },
