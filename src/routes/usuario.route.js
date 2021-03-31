@@ -4,8 +4,10 @@ const { getUsuario,
     login,
     registro,
     editarUsuario,
-    borrarUsuario
-} = require('../service/usuario.service')
+    borrarUsuario,
+    refresToken
+} = require('../service/usuario.service');
+const verifyToken = require('../middlewares/jwt');
 
 router.route('/usuario')
     .get(getUsuario)
@@ -16,6 +18,10 @@ router.route('/usuario/:id')
     .put(editarUsuario)
 
 router.route('/usuario/login')
-    .get(login)
+    .post(login)
+
+router.route('/refreshToken')
+    .get(verifyToken,refresToken)
+
 
 module.exports = router

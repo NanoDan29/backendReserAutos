@@ -1,5 +1,6 @@
 const Usuario = require('../models/usuario')
 const bcrypt = require('bcrypt');
+const generateJWT = require('../helpers/jtw');
 const usuarioService={}
 
 
@@ -42,22 +43,25 @@ usuarioService.getUsuario=(function (req, res) {
 
 usuarioService.login=(function (req, res) {
 
-    let body = req.query
-    let password = bcrypt.hashSync(body.password, 10)
+    let body = req.body;
+
+    console.log(body)
    
     Usuario.findOne({ email: body.email }, (err, usuario) => {
 
-        if (err) return res.status(400).json({ ok: false, err: "El usuario no existe" })
+        if (err) return res.status(400).json({ ok: false, err })
 
-        if (!usuario) return res.status(404).json({ ok: false, usuario })
+        if (!usuario) return res.status(404).json({ ok: false, msg: 'el usuario no existe' })
 
      
       
         bcrypt.compare(body.password, usuario.password,
             (err, resBcrypt) => {
                 if (err) return res.status(404).json({ ok: true, err })
-                if (!resBcrypt) return res.json({ ok: false, resBcrypt })
-                res.status(200).json({ ok: true, resBcrypt,usuario })
+                if (!resBcrypt) return res.json({ ok: false, msg:'contraseña invalida' })
+
+                const token = generateJWT({uid:usuario._id,username:usuario.nombre});
+                res.status(200).json({ ok: true, token })
             })
 
     });
@@ -162,10 +166,15 @@ usuarioService.borrarUsuario=('/usuario/:id', function (req, res) {
 
     });
 
-
-
 });
 
-
+usuarioService.refresToken = (req,res) => {
+    const { uid, username } = req.body.tokenPayload;
+    const token = generateJWT({uid,username});
+    return res.json({
+        ok:true,
+        token
+    })
+}
 
 module.exports = usuarioService;
